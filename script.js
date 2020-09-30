@@ -94,25 +94,28 @@ document.body.addEventListener("click",function(event){
 
 function startQuiz(){
     console.log("the start quiz function is happening");
-    // buttonEl.parentNode.removeChild(buttonEl);
-//    timer1= setInterval(clockTicking,1000)
+
    //show starting time
-  clockTicking()
+  countdown()
 }
-function clockTicking(){
+function countdown(){
     //updates the time 
     var timeInterval = setInterval(function(){
         secondsLeft--;
         timeLeft.textContent = secondsLeft;
         //check if ran out of time
-    if (timeLeft === 0){
+    if (timeLeft <= 0){
         //end the quiz, set clock back to 75
         //to do: need to make end function that uses local storage
-        clearInterval(timeInterval)
-        timeLeft= 0;
+        clearInterval(timeInterval);
+        inputScore();
+    }
+    else if(quizFinished){
+        clearInterval(timeInterval);
+        inputScore();
     }
     }, 1000)
-}
+};
 
 
 
