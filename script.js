@@ -1,3 +1,6 @@
+var secondsLeft= 75; //starting time
+var Index = 0; //question they are on
+
 // var containerVar = document.querySelector(".container");
 var questionEl = document.querySelector(".question");
 var answerEl = document.querySelector(".answer");
@@ -5,9 +8,8 @@ var buttonEl = document.querySelector(".StartQuizBtn");
 var ConfirmEl = document.querySelector(".answer-verify");
 var highscore = document.querySelector(".highscore");
 var timeLeft = document.querySelector(".timer-score");
-var timer = 75;
-var Index = 0;
 
+// Objects array
 var quiz = [
     {
         question: "Commonly used data types DO NOT include:",
@@ -38,17 +40,20 @@ var quiz = [
 
 // selecting the start button
 buttonEl.addEventListener("click", function(){
+    startQuiz();
+
     //removes start button
     buttonEl.style.display = "none";
     // timer.textContent= timer();
     questionEl.textContent= quiz[Index].question;
     answerEl.textContent= "";
-    // for loop through questions and answers array containing multiple objects
+    // for loop through questions array and answers array with multiple objects
     for (i = 0; i < quiz[0].answers.length; i++) {
         var answerBtn = document.createElement("button");
         answerBtn.innerHTML = quiz[0].answers[i];
         answerEl.appendChild(answerBtn);
         answerBtn.className = "answer-button";
+        // if statement
         if (quiz[0].answers[i] === quiz[0].correct)
         {
             answerBtn.setAttribute("data-correct", true);
@@ -65,13 +70,15 @@ document.body.addEventListener("click",function(event){
             ConfirmEl.textContent="Correct!";
         }
         else{
-            ConfirmEl.textContent ="Wrong!"
-            timer = timer -10;
+            ConfirmEl.textContent ="Wrong Answer"
+            secondsLeft= secondsLeft-10;
         }
         Index++;
         questionEl.textContent= quiz[Index].question;
         answerEl.textContent="";
+
         var i=0;
+
     for (i = 0; i < quiz[0].answers.length; i++){
         var answerBtn = document.createElement("button");
         answerBtn.innerHTML = quiz[Index].answers[i];
@@ -86,24 +93,24 @@ document.body.addEventListener("click",function(event){
 });
 
 function startQuiz(){
-    buttonEl.parentNode.removeChild(startButton);
-    timer.textContent = timeLeft;
-
-    displayQuestion(Index);
-    answerChecking(quizIndex);
-
-    var timerInterval = setInterval(function(){
-        // seconds
-        timeLeft--;
-        timer.textContent = timeLeft;
-
-        if (timeLeft <= 0){
-            clearInterval(timerInterval);
-            inputScore();
-        }
-    }, 1000);
+    console.log("the start quiz function is happening");
+    // buttonEl.parentNode.removeChild(buttonEl);
+//    timer1= setInterval(clockTicking,1000)
+   //show starting time
+  clockTicking()
 }
-
-startButton.addEventListener("click", startQuiz);
-// viewScores.addEventListener("click", displayHighScores);
+function clockTicking(){
+    //updates the time 
+    var timeInterval = setInterval(function(){
+        secondsLeft--;
+        timeLeft.textContent = secondsLeft;
+        //check if ran out of time
+    if (timeLeft === 0){
+        //end the quiz, set clock back to 75
+        //to do: need to make end function that uses local storage
+        clearInterval(timeInterval)
+        secondsLeft= 0;
+    }
+    }, 1000)
+}
 
