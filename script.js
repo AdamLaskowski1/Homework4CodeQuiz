@@ -109,8 +109,10 @@ function clockTicking(){
         //end the quiz, set clock back to 75
         //to do: need to make end function that uses local storage
         clearInterval(timeInterval)
-        secondsLeft= 0;
+        timeLeft= 0;
     }
     }, 1000)
 }
+
+
 
